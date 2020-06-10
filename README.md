@@ -4,5 +4,5 @@
 
 1. [React](https://pt-br.reactjs.org/)
 2. [React-Native](https://reactnative.dev/)
-3. [Axios](https://www.npmjs.com/package/axios)
+3. [Axios](https://github.com/axios/axios)
 4. [Moment](https://momentjs.com/)
