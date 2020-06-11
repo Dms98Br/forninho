@@ -71,7 +71,7 @@ export default class ListRecipes extends Component{
     }
 
     addForninho = newTask =>{
-        if(!newTask.desc || !newTask.desc.trim){
+        if(!newTask.name || !newTask.desc.trim){
             Alert.alert('Dados inválidos','Descrição não informada')
             return
         }
@@ -84,7 +84,7 @@ export default class ListRecipes extends Component{
         })
         this.setState( { Recipes, showAddForninho: false}, this.filterForninho )
     }
-
+    
     deleteTask = id =>{
         const Recipes = this.state.Recipes.filter(taks => taks.id !== id)
         this.setState({ Recipes }, this.filterForninho)
@@ -114,10 +114,13 @@ export default class ListRecipes extends Component{
                 </ImageBackground>
                 
                 <View style={styles.taskList}>                    
-                    <FlatList data={this.state.visibleForninho}
-                        keyExtractor = {item => `${item.id}`} 
+                <TouchableOpacity onPress = {() => this.setState({showAddForninho: true})}>
+                <FlatList data={this.state.visibleForninho}                        
+                        keyExtractor = {item => `${item.id}`}
                         renderItem={ ( { item } ) => <Task {...item}
-                        onToggleForninho={this.toggleForninho} onDelete={this.deleteTask}/>}/>
+                        onToggleForninho={this.toggleForninho} onDelete={this.deleteTask}/>}
+                        />
+                </TouchableOpacity>
                 </View>     
 
                 <TouchableOpacity style={styles.addButton}

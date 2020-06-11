@@ -7,9 +7,13 @@ import {
     Text,
     View,
     TouchableOpacity,
+    FlatList,
+    SafeAreaView,
+    ScrollView,
     TextInput,
     StyleSheet,
-    TouchableWithoutFeedback,    
+    TouchableWithoutFeedback,
+    Button    
 } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome' 
 
@@ -20,7 +24,7 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 
 import commonStyles from '../commonStyles'
 
-const initialState = { desc: '', date: new Date(), showDatePicker: false }
+const initialState = { name: '', date: new Date(), desc:[], showDatePicker: false }
 
 export default class AddTask extends Component{
 
@@ -30,13 +34,14 @@ export default class AddTask extends Component{
 
     save = () =>{
         const newTask = {
-            desc: this.state.desc,
-            date: this.state.date
+            name: this.state.name,
+            date: this.state.date,            
+            desc : this.state.desc
          }
         this.props.onSave && this.props.onSave(newTask)
 
         this.setState({ ...initialState })
-
+         desc.length = 0
     }
 
     getDatePicker = () =>{
@@ -62,6 +67,11 @@ export default class AddTask extends Component{
                 
         return datePicker
     }
+    addTextInput = (key) => {
+        let textInput = this.state.desc;
+        textInput.push(<TextInput style={styles.input} placeholder="Ingrediente" key={key} />);
+        this.setState({ textInput })
+      }
 
     render(){
         const today = moment().locale('pt-br').format('ddd, D [de] MMMM')
@@ -74,22 +84,34 @@ export default class AddTask extends Component{
                     onPress={this.props.onCancel}>
                     <View style={styles.background}></View>
                 </TouchableWithoutFeedback>
-                <View style={styles.container}>
-                    <Text style={styles.header}>Nova Receita</Text>
-                    <TextInput style={styles.input}
-                       placeholder="Nome da receita..." 
-                       onChangeText = {desc => this.setState({ desc })}
-                       value={this.state.desc}/>
-                    <Text style={styles.date} >{today} </Text>                    
-                    <View style={styles.buttons}>
-                        <TouchableOpacity onPress={this.props.onCancel}>
-                            <Text style={styles.button}>Cancelar</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={this.save}>
-                        <Text style={styles.button}>Salvar</Text>    
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                <SafeAreaView>
+                    <ScrollView>
+                        <View style={styles.container}>
+                            <Text style={styles.header}>Nova Receita</Text>
+                            <TextInput style={styles.input}
+                            placeholder="Nome da receita..." 
+                            onChangeText = {name => this.setState({ name })}
+                            value={this.state.name}/>
+                            {this.state.desc.map((value, index) => {
+                                return value
+                                })}
+                            <Text style={styles.date} >{today} </Text>
+                            <View style={styles.buttons}>                    
+                                <TouchableOpacity
+                                    onPress={() => this.addTextInput(this.state.desc.length)}>
+                                    <Text style={styles.button}>Adicionar novo ingrediente</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={this.props.onCancel}>
+                                    <Text style={styles.button}>Cancelar</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={this.save}>
+                                <Text style={styles.button}>Salvar</Text>    
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </ScrollView>
+                </SafeAreaView>
+                
                 <TouchableWithoutFeedback 
                     onPress={this.props.onCancel}>
                     <View style={styles.background}></View>

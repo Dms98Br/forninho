@@ -38,13 +38,11 @@ export default props =>{
                     <View style={styles.checkContainer}>
                         {getCheckView(props.doneAt)}
                     </View>
-                </TouchableWithoutFeedback>
-                <TouchableOpacity>
+                </TouchableWithoutFeedback>                
                     <View>
                         <Text style={[styles.desc, doneOrNoteStytle]}>{props.desc}</Text>
                         <Text style={styles.subText}>{formattedDate}</Text>                                       
-                    </View>
-                </TouchableOpacity>
+                    </View>                
             </View>
         </Swipeable>        
     )
