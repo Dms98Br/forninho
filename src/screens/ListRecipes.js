@@ -20,74 +20,74 @@ import 'moment/locale/pt-br'
 import chamas from '../../assets/imgs/chamas.jpg'
 import commonStyles from '../commonStyles'
 import Task from '../components/Forninho'
-import AddTask from '../screens/AddRecipes'
+import AddForninho from '../screens/AddRecipes'
 import { TextInput } from 'react-native-gesture-handler'
 //#endregion
 
 const initialState = { 
-    showDoneTasks: true,
-    showAddTask: false,
-    visibleTasks:[],
-    tasks: [ ]
+    showDoneForninho: true,
+    showAddForninho: false,
+    visibleForninho:[],
+    Recipes: [ ]
 }
 
-export default class TaskList extends Component{
+export default class ListRecipes extends Component{
     state = {
         ...initialState
     }
 
     componentDidMount = async () =>{
-        const stateString = await AsyncStorage.getItem('tasksState')
+        const stateString = await AsyncStorage.getItem('forninhoState')
         const state = JSON.parse(stateString) || initialState
-        this.setState(state, this.filterTasks) 
+        this.setState(state, this.filterForninho) 
     }
 
     toggleFilter = () =>{
-        this.setState({showDoneTasks: !this.state.showDoneTasks}, this.filterTasks)
+        this.setState({showDoneForninho: !this.state.showDoneForninho}, this.filterForninho)
     }
 
-    filterTasks = () =>{
-        let visibleTasks = null
-        if(this.state.showDoneTasks){
-            visibleTasks = [...this.state.tasks]
+    filterForninho = () =>{
+        let visibleForninho = null
+        if(this.state.showDoneForninho){
+            visibleForninho = [...this.state.Recipes]
         }else{
             const pending = taks => taks.doneAt === null
-            visibleTasks = this.state.tasks.filter(pending)
+            visibleForninho = this.state.Recipes.filter(pending)
         }
 
-        this.setState({ visibleTasks })
+        this.setState({ visibleForninho })
 
-        AsyncStorage.setItem('tasksState', JSON.stringify(this.state))
+        AsyncStorage.setItem('forninhoState', JSON.stringify(this.state))
     }
 
-    toggleTask = tasksId => {
-        const tasks = [...this.state.tasks]
-        tasks.forEach(tasks => {
-            if(tasks.id === tasksId){
-                tasks.doneAt = tasks.doneAt ? null : new Date()
+    toggleForninho = RecipesId => {
+        const Recipes = [...this.state.Recipes]
+        Recipes.forEach(Recipes => {
+            if(Recipes.id === RecipesId){
+                Recipes.doneAt = Recipes.doneAt ? null : new Date()
             }
         })
-        this.setState({ tasks }, this.filterTasks)
+        this.setState({ Recipes }, this.filterForninho)
     }
 
-    addTask = newTask =>{
+    addForninho = newTask =>{
         if(!newTask.desc || !newTask.desc.trim){
-            Alert.alert('Dados inválidos','Descrção não informada')
+            Alert.alert('Dados inválidos','Descrição não informada')
             return
         }
-        const tasks = [...this.state.tasks]
-        tasks.push({
+        const Recipes = [...this.state.Recipes]
+        Recipes.push({
             id: Math.random(),
             desc: newTask.desc,
             estimateAt: newTask.date,
-            doneAt: null
+            //doneAt: null
         })
-        this.setState( { tasks, showAddTask: false}, this.filterTasks )
+        this.setState( { Recipes, showAddForninho: false}, this.filterForninho )
     }
 
     deleteTask = id =>{
-        const tasks = this.state.tasks.filter(taks => taks.id !== id)
-        this.setState({ tasks}, this.filterTasks)
+        const Recipes = this.state.Recipes.filter(taks => taks.id !== id)
+        this.setState({ Recipes }, this.filterForninho)
     }
 
     render(){
@@ -95,9 +95,9 @@ export default class TaskList extends Component{
         return(
             <View style={styles.container}>
                 
-                <AddTask isVisible={this.state.showAddTask}
-                    onCancel={() => this.setState({ showAddTask: false })} 
-                    onSave = {this.addTask}/>
+                <AddForninho isVisible={this.state.showAddForninho}
+                    onCancel={() => this.setState({ showAddForninho: false })} 
+                    onSave = {this.addForninho}/>
                 
                 <ImageBackground source={chamas}
                     style = {styles.background}>   
@@ -108,20 +108,21 @@ export default class TaskList extends Component{
                        value={this.state.desc} />                    
                     
                     <View style={styles.titleBar}>
-                        <Text style={styles.title}>Hoje</Text>
-                        <Text style={styles.subtitle}>{today}</Text>
+                        <Text style={styles.title}>FORNIHO</Text>
+                        <Text style={styles.subtitle}>{today}</Text>                        
                     </View>                 
                 </ImageBackground>
-
-                <View style={styles.taskList}>
-                    <FlatList data={this.state.visibleTasks}
+                
+                <View style={styles.taskList}>                    
+                    <FlatList data={this.state.visibleForninho}
                         keyExtractor = {item => `${item.id}`} 
                         renderItem={ ( { item } ) => <Task {...item}
-                        onToggleTask={this.toggleTask} onDelete={this.deleteTask}/>}/>
-                </View>                
+                        onToggleForninho={this.toggleForninho} onDelete={this.deleteTask}/>}/>
+                </View>     
+
                 <TouchableOpacity style={styles.addButton}
                     activeOpacity = {0.7}
-                    onPress = {() => this.setState({showAddTask: true})}>                    
+                    onPress = {() => this.setState({showAddForninho: true})}>                    
                     <Icon name="plus" size={20}
                         color={commonStyles.colors.secondary}/>
                 </TouchableOpacity>
@@ -142,19 +143,19 @@ const styles = StyleSheet.create({
     },
     titleBar:{
         flex: 1,
-        justifyContent: 'flex-end'
+        justifyContent: 'center'
     },
     title:{
         fontFamily: commonStyles.fontFamily,
         color: commonStyles.colors.secondary,
-        fontSize: 50,
-        marginLeft: 20,
+        fontSize: 50,        
+        marginLeft: 93,
         marginBottom: 20
     },
     input:{
         fontFamily: commonStyles.fontFamily,
         height: 40,
-        margin: 15,
+        margin: 15,        
         backgroundColor: '#FFF',
         borderWidth: 1,
         borderColor: '#E3E3E3',

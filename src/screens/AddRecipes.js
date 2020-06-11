@@ -64,6 +64,7 @@ export default class AddTask extends Component{
     }
 
     render(){
+        const today = moment().locale('pt-br').format('ddd, D [de] MMMM')
         return(
             <Modal transparent={true} 
                 visible={this.props.isVisible}
@@ -74,12 +75,12 @@ export default class AddTask extends Component{
                     <View style={styles.background}></View>
                 </TouchableWithoutFeedback>
                 <View style={styles.container}>
-                    <Text style={styles.header}>Nova Tarefa</Text>
+                    <Text style={styles.header}>Nova Receita</Text>
                     <TextInput style={styles.input}
-                       placeholder="Informe a descrição..." 
+                       placeholder="Nome da receita..." 
                        onChangeText = {desc => this.setState({ desc })}
                        value={this.state.desc}/>
-                    {this.getDatePicker()}
+                    <Text style={styles.date} >{today} </Text>                    
                     <View style={styles.buttons}>
                         <TouchableOpacity onPress={this.props.onCancel}>
                             <Text style={styles.button}>Cancelar</Text>

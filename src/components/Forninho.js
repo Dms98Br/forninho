@@ -34,15 +34,17 @@ export default props =>{
     return(
         <Swipeable renderRightActions={getRightContent}>
             <View style = {styles.container}>
-                <TouchableWithoutFeedback onPress={() => props.onToggleTask(props.id)}>
+                <TouchableWithoutFeedback onPress={() => props.onToggleForninho(props.id)}>
                     <View style={styles.checkContainer}>
                         {getCheckView(props.doneAt)}
                     </View>
                 </TouchableWithoutFeedback>
-                <View>
-                    <Text style={[styles.desc, doneOrNoteStytle]}>{props.desc}</Text>
-                    <Text style={styles.subText}>{formattedDate}</Text>                                       
-                </View>
+                <TouchableOpacity>
+                    <View>
+                        <Text style={[styles.desc, doneOrNoteStytle]}>{props.desc}</Text>
+                        <Text style={styles.subText}>{formattedDate}</Text>                                       
+                    </View>
+                </TouchableOpacity>
             </View>
         </Swipeable>        
     )
