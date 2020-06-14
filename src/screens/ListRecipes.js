@@ -21,12 +21,14 @@ import chamas from '../../assets/imgs/chamas.jpg'
 import commonStyles from '../commonStyles'
 import Task from '../components/Forninho'
 import AddForninho from '../screens/AddRecipes'
+import GetRecipes from '../screens/GetRecipes'
 import { TextInput } from 'react-native-gesture-handler'
 //#endregion
 
 const initialState = { 
     showDoneForninho: true,
     showAddForninho: false,
+    showGetRecipes: false,
     visibleForninho:[],
     Recipes: [ ]
 }
@@ -69,19 +71,21 @@ export default class ListRecipes extends Component{
         })
         this.setState({ Recipes }, this.filterForninho)
     }
-
+    
     addForninho = newTask =>{
-        if(!newTask.name || !newTask.desc.trim){
+        if(!newTask.name || !newTask.name.trim){
             Alert.alert('Dados inválidos','Descrição não informada')
             return
         }
+          
         const Recipes = [...this.state.Recipes]
         Recipes.push({
             id: Math.random(),
+            name: newTask.name,
             desc: newTask.desc,
-            estimateAt: newTask.date,
-            //doneAt: null
+            estimateAt: newTask.date            
         })
+        
         this.setState( { Recipes, showAddForninho: false}, this.filterForninho )
     }
     
@@ -98,7 +102,11 @@ export default class ListRecipes extends Component{
                 <AddForninho isVisible={this.state.showAddForninho}
                     onCancel={() => this.setState({ showAddForninho: false })} 
                     onSave = {this.addForninho}/>
-                
+
+                <GetRecipes isVisible={this.state.showGetRecipes}
+                    onCancel={() => this.setState({ showGetRecipes: false })} 
+                    onSave = {this.addForninho}/>
+
                 <ImageBackground source={chamas}
                     style = {styles.background}>   
                     
@@ -114,7 +122,7 @@ export default class ListRecipes extends Component{
                 </ImageBackground>
                 
                 <View style={styles.taskList}>                    
-                <TouchableOpacity onPress = {() => this.setState({showAddForninho: true})}>
+                <TouchableOpacity onPress = {() => this.setState({ showGetRecipes: true})}>
                 <FlatList data={this.state.visibleForninho}                        
                         keyExtractor = {item => `${item.id}`}
                         renderItem={ ( { item } ) => <Task {...item}

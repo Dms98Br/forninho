@@ -13,7 +13,7 @@ import {
     TextInput,
     StyleSheet,
     TouchableWithoutFeedback,
-    Keyboard    
+    Button    
 } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome' 
 
@@ -70,7 +70,7 @@ export default class AddTask extends Component{
     
     addTextInput = (key) => {   
         let textInput = this.state.desc;     
-        textInput.push(<TextInput style={styles.input} placeholder="Ingrediente" key={key} />);
+        textInput.push(<TextInput style={styles.input} editable = {false} placeholder="Ingrediente" key={key} />);
         this.setState({ textInput })
       }
     removeTextInput =(key) =>{
@@ -94,36 +94,21 @@ export default class AddTask extends Component{
                     <ScrollView>
                         <View style={styles.container}>
                             <Text style={styles.header}>Nova Receita</Text>
-                            <TextInput style={styles.input}
-                            placeholder="Nome da receita..." 
-                            onChangeText = {name => this.setState({ name })}
-                            value={this.state.name}
-                            onSubmitEditing={Keyboard.dismiss}/>
-                            {this.state.desc.map((value, index) => {
-                                return value
-                                })}
-                            {/* <Text style={styles.date} >{today} </Text> */}
-                            <View style={styles.buttons}>                    
-                                <TouchableOpacity style={styles.addButton}
-                                    activeOpacity = {0.7}
-                                    onPress={() => this.addTextInput(this.state.desc.length)}>
-                                    <Icon name="plus" size={20}
+                            <TouchableOpacity style={styles.closeButton}
+                                    onPress={this.props.onCancel}>
+                                    <Icon name="close" size={20}
                                         color={commonStyles.colors.secondary}/>
                                 </TouchableOpacity>
                                 
-                                <TouchableOpacity style={styles.removeButton}
-                                    activeOpacity = {0.7}
-                                    onPress={() => this.removeTextInput(this.state.desc.length)}>
-                                    <Icon name="minus" size={20}
-                                        color={commonStyles.colors.secondary}/>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity onPress={this.props.onCancel}>
-                                    <Text style={styles.button}>Cancelar</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={this.save}>
-                                    <Text style={styles.button}>Salvar</Text>    
-                                </TouchableOpacity>
+                            <TextInput style={styles.input} editable = {false}
+                            placeholder="Nome da receita..." 
+                            onChangeText = {name => this.setState({ name })}
+                            value={this.state.name}/>
+                            {this.state.desc.map((value, index) => {
+                                return value
+                            })}
+                            {/* <Text style={styles.date} >{today} </Text> */}
+                            <View style={styles.buttons}>     
                             </View>
                         </View>
                     </ScrollView>
@@ -141,7 +126,7 @@ export default class AddTask extends Component{
 
 const styles = StyleSheet.create({
     background:{
-        flex: 1,
+        flex: 4,
         backgroundColor: 'rgba(0, 0, 0, 0.7)'
     },
     container:{        
@@ -157,12 +142,13 @@ const styles = StyleSheet.create({
     },
     input:{
         fontFamily: commonStyles.fontFamily,
+        color: '#000303',
         height: 40,
         margin: 15,
-        backgroundColor: '#FFF',
+        backgroundColor: 'rgba(0, 0, 4, 0.05)',
         borderWidth: 1,
         borderColor: '#E3E3E3',
-        borderRadius: 6
+        borderRadius: 6,               
     },
     buttons: {
         flexDirection: 'row',
@@ -178,21 +164,10 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginLeft: 15
     },
-    addButton: {
+    closeButton: {
         position: 'absolute',
-        left: 30,
-        bottom: 10,
-        width: 30,
-        height: 30,
-        borderRadius: 25,
-        backgroundColor: commonStyles.colors.today,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    removeButton: {
-        position: 'absolute',
-        left: 70,
-        bottom: 10,
+        right: 5,
+        top: 15,
         width: 30,
         height: 30,
         borderRadius: 25,

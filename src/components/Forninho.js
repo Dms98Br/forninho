@@ -40,7 +40,7 @@ export default props =>{
                     </View>
                 </TouchableWithoutFeedback>                
                     <View>
-                        <Text style={[styles.desc, doneOrNoteStytle]}>{props.desc}</Text>
+                        <Text style={[styles.desc, doneOrNoteStytle]}>{props.name}</Text>
                         <Text style={styles.subText}>{formattedDate}</Text>                                       
                     </View>                
             </View>
