@@ -7,9 +7,7 @@ import {
     Text,
     View,
     TouchableOpacity,
-    FlatList,
-    SafeAreaView,
-    ScrollView,
+    FlatList, 
     TextInput,
     StyleSheet,
     TouchableWithoutFeedback,
@@ -17,66 +15,20 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome' 
 
+import ResultItem from "../components/ResultItem"
 import moment, { relativeTimeThreshold } from 'moment'
 import DateTimePicker from '@react-native-community/datetimepicker'
 
 //#endregion
 
 import commonStyles from '../commonStyles'
-
-const initialState = { name: '', date: new Date(), desc:[], showDatePicker: false }
+//var someText = await AsyncStorage.getItem('forninhoState');
+const initialState = { name: '', date: new Date(), desc: [], showDatePicker: false }
 
 export default class AddTask extends Component{
 
     state = {
         ...initialState
-    }
-
-    save = () =>{
-        const newTask = {
-            name: this.state.name,
-            date: this.state.date,            
-            desc : this.state.desc
-         }
-        this.props.onSave && this.props.onSave(newTask)
-
-        this.setState({ ...initialState })
-         this.state.desc.length = 0
-    }
-
-    getDatePicker = () =>{
-        let datePicker = <DateTimePicker 
-            value={this.state.date}
-            onChange={(_, date) => this.setState({ date, showDatePicker: false})}
-            mode='date'/>
-
-        const dateString = moment(this.state.date).format('ddd, D [de] MMMM [de] YYYY')
-
-        if(Platform.OS === 'android'){
-            datePicker = (
-                <View>
-                    <TouchableOpacity onPress={() => this.setState({ showDatePicker: true})}>
-                        <Text style={styles.date}>
-                            {dateString}
-                        </Text>
-                    </TouchableOpacity>
-                    {this.state.showDatePicker && datePicker }
-                </View>
-            )
-        }
-                
-        return datePicker
-    }
-    
-    addTextInput = (key) => {   
-        let textInput = this.state.desc;     
-        textInput.push(<TextInput style={styles.input} editable = {false} placeholder="Ingrediente" key={key} />);
-        this.setState({ textInput })
-      }
-    removeTextInput =(key) =>{
-        let textInput = this.state.desc;     
-        textInput.pop(<TextInput style={styles.input} placeholder="Ingrediente" key={key} />);
-        this.setState({ textInput })
     }
 
     render(){
@@ -90,30 +42,20 @@ export default class AddTask extends Component{
                     onPress={this.props.onCancel}>
                     <View style={styles.background}></View>
                 </TouchableWithoutFeedback>
-                <SafeAreaView>
-                    <ScrollView>
+                    
                         <View style={styles.container}>
-                            <Text style={styles.header}>Nova Receita</Text>
+                            <Text style={styles.header}>{this.state.name}</Text>
                             <TouchableOpacity style={styles.closeButton}
                                     onPress={this.props.onCancel}>
                                     <Icon name="close" size={20}
                                         color={commonStyles.colors.secondary}/>
-                                </TouchableOpacity>
-                                
-                            <TextInput style={styles.input} editable = {false}
-                            placeholder="Nome da receita..." 
-                            onChangeText = {name => this.setState({ name })}
-                            value={this.state.name}/>
-                            {this.state.desc.map((value, index) => {
-                                return value
-                            })}
-                            {/* <Text style={styles.date} >{today} </Text> */}
-                            <View style={styles.buttons}>     
-                            </View>
+                            </TouchableOpacity>
+                            <ResultItem />
+                            
+                           {/* <Text style={styles.date} >{today} </Text> */}
+
                         </View>
-                    </ScrollView>
-                </SafeAreaView>
-                
+
                 <TouchableWithoutFeedback 
                     onPress={this.props.onCancel}>
                     <View style={styles.background}></View>
@@ -125,23 +67,30 @@ export default class AddTask extends Component{
 }
 
 const styles = StyleSheet.create({
+    ResultItem:{
+        flex: 4
+    },
     background:{
         flex: 4,
         backgroundColor: 'rgba(0, 0, 0, 0.7)'
+    },
+    taskList:{
+        flex:7
     },
     container:{        
         backgroundColor:'#FFF'
     },
     header:{
-        fontFamily: commonStyles.fontFamily,
+        fontFamily: commonStyles.fontFamily,        
         backgroundColor: commonStyles.colors.today,
         color: commonStyles.colors.secondary,
         textAlign: 'center',
         padding: 15,
-        fontSize: 20
+        fontSize: 23
     },
-    input:{
+    ingredients:{
         fontFamily: commonStyles.fontFamily,
+        fontSize: 20,
         color: '#000303',
         height: 40,
         margin: 15,

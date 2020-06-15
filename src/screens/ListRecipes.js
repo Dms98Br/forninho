@@ -19,7 +19,7 @@ import 'moment/locale/pt-br'
 //#region Import de arquivos que foram criados
 import chamas from '../../assets/imgs/chamas.jpg'
 import commonStyles from '../commonStyles'
-import Task from '../components/Forninho'
+import Forninho from '../components/Forninho'
 import AddForninho from '../screens/AddRecipes'
 import GetRecipes from '../screens/GetRecipes'
 import { TextInput } from 'react-native-gesture-handler'
@@ -96,6 +96,7 @@ export default class ListRecipes extends Component{
 
     render(){
         const today = moment().locale('pt-br').format('ddd, D [de] MMMM')
+        
         return(
             <View style={styles.container}>
                 
@@ -105,7 +106,7 @@ export default class ListRecipes extends Component{
 
                 <GetRecipes isVisible={this.state.showGetRecipes}
                     onCancel={() => this.setState({ showGetRecipes: false })} 
-                    onSave = {this.addForninho}/>
+                    />
 
                 <ImageBackground source={chamas}
                     style = {styles.background}>   
@@ -116,19 +117,28 @@ export default class ListRecipes extends Component{
                        value={this.state.desc} />                    
                     
                     <View style={styles.titleBar}>
-                        <Text style={styles.title}>FORNIHO</Text>
+                        {/* <Text style={styles.title}>FORNIHO</Text> */}
+                        <Text style={styles.title}>{this.GetRecipe}</Text>
                         <Text style={styles.subtitle}>{today}</Text>                        
                     </View>                 
                 </ImageBackground>
                 
-                <View style={styles.taskList}>                    
-                <TouchableOpacity onPress = {() => this.setState({ showGetRecipes: true})}>
+                <View style={styles.taskList}>      
+                
                 <FlatList data={this.state.visibleForninho}                        
                         keyExtractor = {item => `${item.id}`}
-                        renderItem={ ( { item } ) => <Task {...item}
-                        onToggleForninho={this.toggleForninho} onDelete={this.deleteTask}/>}
-                        />
-                </TouchableOpacity>
+                        renderItem={ ( { item } ) => 
+                        {
+                            return(
+                                <TouchableOpacity onPress = {() => this.setState({ showGetRecipes: true})}>
+                                    <Forninho {...item}
+                                    onToggleForninho={this.toggleForninho} 
+                                    onDelete={this.deleteTask}/>
+                                </TouchableOpacity>                                
+                            )
+                        }
+                        
+                    }/> 
                 </View>     
 
                 <TouchableOpacity style={styles.addButton}

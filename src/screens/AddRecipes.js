@@ -24,7 +24,7 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 
 import commonStyles from '../commonStyles'
 
-const initialState = { name: '', date: new Date(), desc:[], showDatePicker: false }
+const initialState = { name: '', date: new Date(), desc: [] , showDatePicker: false }
 
 export default class AddTask extends Component{
 
@@ -90,10 +90,13 @@ export default class AddTask extends Component{
                     onPress={this.props.onCancel}>
                     <View style={styles.background}></View>
                 </TouchableWithoutFeedback>
+
                 <SafeAreaView>
                     <ScrollView>
                         <View style={styles.container}>
+
                             <Text style={styles.header}>Nova Receita</Text>
+
                             <TextInput style={styles.input}
                             placeholder="Nome da receita..." 
                             onChangeText = {name => this.setState({ name })}
@@ -103,7 +106,8 @@ export default class AddTask extends Component{
                                 return value
                                 })}
                             {/* <Text style={styles.date} >{today} </Text> */}
-                            <View style={styles.buttons}>                    
+                            <View style={styles.buttons}>     
+
                                 <TouchableOpacity style={styles.addButton}
                                     activeOpacity = {0.7}
                                     onPress={() => this.addTextInput(this.state.desc.length)}>
@@ -121,9 +125,11 @@ export default class AddTask extends Component{
                                 <TouchableOpacity onPress={this.props.onCancel}>
                                     <Text style={styles.button}>Cancelar</Text>
                                 </TouchableOpacity>
+
                                 <TouchableOpacity onPress={this.save}>
                                     <Text style={styles.button}>Salvar</Text>    
                                 </TouchableOpacity>
+
                             </View>
                         </View>
                     </ScrollView>
