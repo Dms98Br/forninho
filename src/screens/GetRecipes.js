@@ -44,13 +44,13 @@ export default class AddTask extends Component{
                 </TouchableWithoutFeedback>
                     
                         <View style={styles.container}>
-                            <Text style={styles.header}>{this.state.name}</Text>
+                            <Text style={styles.header}>{ResultItem.name}</Text>
                             <TouchableOpacity style={styles.closeButton}
                                     onPress={this.props.onCancel}>
                                     <Icon name="close" size={20}
                                         color={commonStyles.colors.secondary}/>
                             </TouchableOpacity>
-                            <ResultItem />
+                            <ResultItem style={styles.header}/>
                             
                            {/* <Text style={styles.date} >{today} </Text> */}
 
