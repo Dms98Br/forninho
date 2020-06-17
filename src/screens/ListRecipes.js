@@ -106,8 +106,7 @@ export default class ListRecipes extends Component{
 
                 <GetRecipes isVisible={this.state.showGetRecipes}
                     onCancel={() => this.setState({ showGetRecipes: false })} 
-                    />
-
+                    />                
                 <ImageBackground source={chamas}
                     style = {styles.background}>   
                     
@@ -133,7 +132,9 @@ export default class ListRecipes extends Component{
                                 <TouchableOpacity onPress = {() => this.setState({ showGetRecipes: true})}>
                                     <Forninho {...item}
                                     onToggleForninho={this.toggleForninho} 
-                                    onDelete={this.deleteTask}/>
+                                    onDelete={this.deleteTask}                                                                         
+                                    />
+                                    
                                 </TouchableOpacity>                                
                             )
                         }
