@@ -25,9 +25,10 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 import commonStyles from '../commonStyles'
 
 const initialState = { name: '', date: new Date(), desc: [] , showDatePicker: false }
-
+let textInput=[]
+//const [value, onChangeText] = React.useState('Useless Placeholder');
 export default class AddTask extends Component{
-
+    
     state = {
         ...initialState
     }
@@ -72,42 +73,42 @@ export default class AddTask extends Component{
         return datePicker
     }
     
-    addTextInput = (desc, key) => {   
-        let textInput = this.state.desc; 
-        const [desc, setDesc] = useState()        
+    addTextInput = (index) => {   
         textInput.push(<TextInput style={styles.input}
-            onChangeText={(text) => this.addValues(setDesc(text), key),console.log()
-            } 
-            placeholder="Ingrediente..." key={key} />);                    
-            
-            this.setState({ textInput })
+        onChangeText={(text) => this.addValues(text, index)} 
+        placeholder="Ingrediente..." key={index}/>);
+        this.setState({ textInput });
+
     }
     addValues = (text, index) => {
-        // console.log("this.state.desc " + this.state.desc);
-        // console.log("Text " + text);
+        
+        console.log("Text " + text);
+        console.log("Index " + index);
         
         let dataArray = this.state.desc;
         let checkBool = false;
-        
+        console.log("Passou aqui 1");
         if (dataArray.length !== 0){
           dataArray.forEach(element => {
             if (element.index === index ){
               element.text = text;
               checkBool = true;
+              console.log("Passou aqui 2");
             }
           });
         }
         if (checkBool){
         this.setState({
-          inputData: dataArray
+          desc: dataArray
         });
+        console.log("Passou aqui 3");
       }
       else {
         dataArray.push({'text':text,'index':index});
         this.setState({
-          inputData: dataArray
+          desc: dataArray                    
         });       
-        
+        console.log("Passou aqui 4");
       }
       }
     removeTextInput =(key) =>{
@@ -140,8 +141,8 @@ export default class AddTask extends Component{
                             value={this.state.name}
                             onSubmitEditing={Keyboard.dismiss}/>
 
-                            {this.state.desc.map((value, index) => {
-                                return value
+                            {textInput.map((value) => {
+                                    return value
                             })}
 
                             <Text style={styles.date} >{today} </Text>
@@ -149,14 +150,14 @@ export default class AddTask extends Component{
 
                                 <TouchableOpacity style={styles.addButton}
                                     activeOpacity = {0.7}
-                                    onPress={() => this.addTextInput(this.state.desc, this.state.desc.length)}>
+                                    onPress={() => this.addTextInput( textInput.length )}>
                                     <Icon name="plus" size={20}
                                         color={commonStyles.colors.secondary}/>
                                 </TouchableOpacity>
                                 
                                 <TouchableOpacity style={styles.removeButton}
                                     activeOpacity = {0.7}
-                                    onPress={() => this.removeTextInput(this.state.desc.length)}>
+                                    onPress={() => this.removeTextInput(textInput.length)}>
                                     <Icon name="minus" size={20}
                                         color={commonStyles.colors.secondary}/>
                                 </TouchableOpacity>
