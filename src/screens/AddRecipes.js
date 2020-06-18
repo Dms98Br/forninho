@@ -1,5 +1,5 @@
 //#region Import react
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 
 import {
     Platform,
@@ -72,10 +72,11 @@ export default class AddTask extends Component{
         return datePicker
     }
     
-    addTextInput = (key) => {   
-        let textInput = this.state.desc;         
+    addTextInput = (desc, key) => {   
+        let textInput = this.state.desc; 
+        const [desc, setDesc] = useState()        
         textInput.push(<TextInput style={styles.input}
-            onChangeText={(text) => this.addValues(text, key),console.log()
+            onChangeText={(text) => this.addValues(setDesc(text), key),console.log()
             } 
             placeholder="Ingrediente..." key={key} />);                    
             
@@ -148,7 +149,7 @@ export default class AddTask extends Component{
 
                                 <TouchableOpacity style={styles.addButton}
                                     activeOpacity = {0.7}
-                                    onPress={() => this.addTextInput(this.state.desc.length)}>
+                                    onPress={() => this.addTextInput(this.state.desc, this.state.desc.length)}>
                                     <Icon name="plus" size={20}
                                         color={commonStyles.colors.secondary}/>
                                 </TouchableOpacity>
