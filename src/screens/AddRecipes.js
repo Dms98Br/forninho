@@ -39,7 +39,11 @@ export default class AddTask extends Component{
             desc : this.state.desc
          }
         this.props.onSave && this.props.onSave(newTask)
-
+         console.log("name " + newTask.name);
+                 
+        console.log(Object.values(newTask.desc));   
+        console.log("Tamanho " + newTask.desc.length);
+        console.log("date " + newTask.date);
         this.setState({ ...initialState })
          this.state.desc.length = 0
     }
@@ -69,9 +73,41 @@ export default class AddTask extends Component{
     }
     
     addTextInput = (key) => {   
-        let textInput = this.state.desc;     
-        textInput.push(<TextInput style={styles.input} placeholder="Ingrediente" key={key} />);
-        this.setState({ textInput })
+        let textInput = this.state.desc;         
+        textInput.push(<TextInput style={styles.input}
+            onChangeText={(text) => this.addValues(text, key),console.log()
+            } 
+            placeholder="Ingrediente..." key={key} />);                    
+            
+            this.setState({ textInput })
+    }
+    addValues = (text, index) => {
+        // console.log("this.state.desc " + this.state.desc);
+        // console.log("Text " + text);
+        
+        let dataArray = this.state.desc;
+        let checkBool = false;
+        
+        if (dataArray.length !== 0){
+          dataArray.forEach(element => {
+            if (element.index === index ){
+              element.text = text;
+              checkBool = true;
+            }
+          });
+        }
+        if (checkBool){
+        this.setState({
+          inputData: dataArray
+        });
+      }
+      else {
+        dataArray.push({'text':text,'index':index});
+        this.setState({
+          inputData: dataArray
+        });       
+        
+      }
       }
     removeTextInput =(key) =>{
         let textInput = this.state.desc;     
@@ -102,10 +138,12 @@ export default class AddTask extends Component{
                             onChangeText = {name => this.setState({ name })}
                             value={this.state.name}
                             onSubmitEditing={Keyboard.dismiss}/>
+
                             {this.state.desc.map((value, index) => {
                                 return value
-                                })}
-                            {/* <Text style={styles.date} >{today} </Text> */}
+                            })}
+
+                            <Text style={styles.date} >{today} </Text>
                             <View style={styles.buttons}>     
 
                                 <TouchableOpacity style={styles.addButton}
