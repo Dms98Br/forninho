@@ -40,9 +40,8 @@ export default props =>{
                     </View>
                 </TouchableWithoutFeedback>                
                     <View>
-                        <Text style={[styles.desc, doneOrNoteStytle]}>{props.name}</Text>
-                        <Text style={styles.subText}>{props.desc}</Text>
-                        <Text style={styles.subText}>{formattedDate}</Text>
+                        <Text style={[styles.header]}>{props.name}</Text>                        
+                        {/* <Text style={styles.subText}>{formattedDate}</Text> */}
                     </View>                
             </View>
         </Swipeable>        
@@ -66,66 +65,65 @@ function getCheckView(doneAt){
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flexDirection: 'row',
-        borderColor: "#AAA",
-        borderBottomWidth: 1,
-        alignItems: 'center',
-        paddingVertical: 10,
-        backgroundColor: '#FFF'
-    },
-    checkContainer:{
-        width:'20%',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    pending:{
-        height: 25,
-        width: 25,
-        borderRadius: 13,
-        borderWidth: 1,
-        borderColor: '#555'
-    },
-    done:{
-        height: 25,
-        width: 25,
-        borderRadius: 13,
-        borderWidth: 1,
-        backgroundColor: '#4D7031',
-        alignItems: 'center',
-        justifyContent:'center'
-    },
-    desc:{
-        fontFamily: commonStyles.fontFamily,
-        color: commonStyles.colors.mainText,        
-        fontSize: 15
-        
-    },
-    date:{
-        fontFamily: commonStyles.fontFamily,
-        color: commonStyles.colors.subText,
-        fontSize: 12 
-    },
-    right:{
-        backgroundColor: 'red',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        paddingHorizontal: 20
-    },
-    left:{
+    background:{
         flex: 1,
-        backgroundColor: 'red',
-        flexDirection: 'row',
-        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)'
     },
-    excludeIcon:{
-        marginLeft: 10
+    container:{        
+        backgroundColor:'#FFF'
     },
-    excludeText:{
+    header:{
         fontFamily: commonStyles.fontFamily,
-        color: '#FFF',
+        backgroundColor: commonStyles.colors.today,
+        color: commonStyles.colors.secondary,
+        textAlign: 'center',
+        padding: 15,
+        fontSize: 20
+    },
+    input:{
+        color: '#111111',
+        fontFamily: commonStyles.fontFamily,
+        height: 40,
+        margin: 15,
+        backgroundColor: '#FFF',
+        borderWidth: 1,
+        borderColor: '#E3E3E3',
+        borderRadius: 6
+    },
+    buttons: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end'
+    },
+    button: {
+        margin: 20,
+        marginRight: 30,
+        color: commonStyles.colors.today
+    },
+    date:{        
+        fontFamily: commonStyles.fontFamily,
         fontSize: 20,
-        margin: 10
+        marginLeft: 15
+    },
+    addButton: {
+        position: 'absolute',
+        left: 30,
+        bottom: 10,
+        width: 30,
+        height: 30,
+        borderRadius: 25,
+        backgroundColor: commonStyles.colors.today,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    removeButton: {
+        position: 'absolute',
+        left: 70,
+        bottom: 10,
+        width: 30,
+        height: 30,
+        borderRadius: 25,
+        backgroundColor: commonStyles.colors.today,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })

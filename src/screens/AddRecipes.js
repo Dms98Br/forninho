@@ -38,13 +38,14 @@ export default class AddRecipes extends Component{
             desc : this.state.desc
          }
         this.props.onSave && this.props.onSave(newTask)        
-        this.setState({ ...initialState })
-        this.state.desc.length = 0
+        this.setState({ ...initialState })        
+        this.state.desc = 0
     }
 
     getDatePicker = () =>{
         let datePicker = <DateTimePicker 
             value={this.state.date}
+
             onChange={(_, date) => this.setState({ date, showDatePicker: false})}
             mode='date'/>
 
@@ -68,16 +69,16 @@ export default class AddRecipes extends Component{
 //#region Dynamic input text
     addTextInput = (index) => {   
         textInput.push(<TextInput style={styles.input}
-        onChangeText={(text) => this.addValues(text, index)} 
+        onChangeText={(desc) => this.addValues(desc, index)
+        } 
         placeholder="Ingrediente..." key={index}/>);
         this.setState({ textInput });
     }
     addValues = (text, index) => {
-        
         let dataArray = this.state.desc;
         let checkBool = false;        
         if (dataArray.length !== 0){
-          dataArray.forEach(element => {
+            dataArray.forEach(element => {
             if (element.index === index ){
               element.text = text;
               checkBool = true;              
@@ -86,18 +87,18 @@ export default class AddRecipes extends Component{
         }
         if (checkBool){
         this.setState({
-          desc: dataArray
+          desc: this.state.desc 
         });        
       }
-      else {
-        dataArray.push({'text':text,'index':index});
+      else {        
+        this.state.desc.push({'text':text,'index':index});
         this.setState({
-          desc: dataArray                    
-        });        
+          desc: this.state.desc                    
+        });            
       }
       }
     removeTextInput =(key) =>{
-        let textInput = this.state.desc;     
+        
         textInput.pop(<TextInput style={styles.input} placeholder="Ingrediente" key={key} />);
         this.setState({ textInput })
     }

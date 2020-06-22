@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
         fontFamily: commonStyles.fontFamily,
         color: commonStyles.colors.mainText,        
         fontSize: 15
-        
     },
     date:{
         fontFamily: commonStyles.fontFamily,

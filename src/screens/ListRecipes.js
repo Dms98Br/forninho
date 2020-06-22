@@ -102,10 +102,10 @@ export default class ListRecipes extends Component{
                 
                 <AddForninho isVisible={this.state.showAddForninho}
                     onCancel={() => this.setState({ showAddForninho: false })} 
-                    onSave = {this.addForninho}/>
+                    onSave = {this.addForninho}/>        
 
                 <GetRecipe isVisible={this.state.showGetRecipes}
-                    onCancel={() => this.setState({ showGetRecipes: false })}/>
+                onCancel={() => this.setState({ showGetRecipes: false })}/>
 
                 <ImageBackground source={chamas}
                     style = {styles.background}>   
@@ -120,6 +120,7 @@ export default class ListRecipes extends Component{
                         <Text style={styles.subtitle}>{today}</Text>                        
                     </View>                 
                 </ImageBackground>
+
                 
                 <View style={styles.taskList}>      
                 
@@ -132,7 +133,9 @@ export default class ListRecipes extends Component{
                                     <Forninho {...item}
                                     onToggleForninho={this.toggleForninho} 
                                     onDelete={this.deleteTask}                                                                         
-                                    />                                    
+                                    />  
+                                    {console.log(<Forninho {...item}/>)}
+
                                 </TouchableOpacity>                                
                             )
                         }
