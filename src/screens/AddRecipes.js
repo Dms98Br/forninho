@@ -1,13 +1,12 @@
 //#region Import react
-import React, { Component, useState } from 'react'
+import React, { Component } from 'react'
 
 import {
     Platform,
     Modal,
     Text,
     View,
-    TouchableOpacity,
-    FlatList,
+    TouchableOpacity,    
     SafeAreaView,
     ScrollView,
     TextInput,
@@ -26,8 +25,7 @@ import commonStyles from '../commonStyles'
 
 const initialState = { name: '', date: new Date(), desc: [] , showDatePicker: false }
 let textInput=[]
-//const [value, onChangeText] = React.useState('Useless Placeholder');
-export default class AddTask extends Component{
+export default class AddRecipes extends Component{
     
     state = {
         ...initialState
@@ -39,14 +37,9 @@ export default class AddTask extends Component{
             date: this.state.date,            
             desc : this.state.desc
          }
-        this.props.onSave && this.props.onSave(newTask)
-         console.log("name " + newTask.name);
-                 
-        console.log(Object.values(newTask.desc));   
-        console.log("Tamanho " + newTask.desc.length);
-        console.log("date " + newTask.date);
+        this.props.onSave && this.props.onSave(newTask)        
         this.setState({ ...initialState })
-         this.state.desc.length = 0
+        this.state.desc.length = 0
     }
 
     getDatePicker = () =>{
@@ -72,43 +65,35 @@ export default class AddTask extends Component{
                 
         return datePicker
     }
-    
+//#region Dynamic input text
     addTextInput = (index) => {   
         textInput.push(<TextInput style={styles.input}
         onChangeText={(text) => this.addValues(text, index)} 
         placeholder="Ingrediente..." key={index}/>);
         this.setState({ textInput });
-
     }
     addValues = (text, index) => {
         
-        console.log("Text " + text);
-        console.log("Index " + index);
-        
         let dataArray = this.state.desc;
-        let checkBool = false;
-        console.log("Passou aqui 1");
+        let checkBool = false;        
         if (dataArray.length !== 0){
           dataArray.forEach(element => {
             if (element.index === index ){
               element.text = text;
-              checkBool = true;
-              console.log("Passou aqui 2");
+              checkBool = true;              
             }
           });
         }
         if (checkBool){
         this.setState({
           desc: dataArray
-        });
-        console.log("Passou aqui 3");
+        });        
       }
       else {
         dataArray.push({'text':text,'index':index});
         this.setState({
           desc: dataArray                    
-        });       
-        console.log("Passou aqui 4");
+        });        
       }
       }
     removeTextInput =(key) =>{
@@ -116,6 +101,7 @@ export default class AddTask extends Component{
         textInput.pop(<TextInput style={styles.input} placeholder="Ingrediente" key={key} />);
         this.setState({ textInput })
     }
+//#endregion
 
     render(){
         const today = moment().locale('pt-br').format('ddd, D [de] MMMM')
@@ -202,6 +188,7 @@ const styles = StyleSheet.create({
         fontSize: 20
     },
     input:{
+        color: '#111111',
         fontFamily: commonStyles.fontFamily,
         height: 40,
         margin: 15,

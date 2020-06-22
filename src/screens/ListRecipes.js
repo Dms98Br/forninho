@@ -21,6 +21,7 @@ import chamas from '../../assets/imgs/chamas.jpg'
 import commonStyles from '../commonStyles'
 import Forninho from '../components/Forninho'
 import AddForninho from '../screens/AddRecipes'
+import GetRecipe from '../screens/GetRecipes'
 import { TextInput } from 'react-native-gesture-handler'
 //#endregion
 
@@ -102,7 +103,10 @@ export default class ListRecipes extends Component{
                 <AddForninho isVisible={this.state.showAddForninho}
                     onCancel={() => this.setState({ showAddForninho: false })} 
                     onSave = {this.addForninho}/>
-                               
+
+                <GetRecipe isVisible={this.state.showGetRecipes}
+                    onCancel={() => this.setState({ showGetRecipes: false })}/>
+
                 <ImageBackground source={chamas}
                     style = {styles.background}>   
                     
@@ -112,8 +116,7 @@ export default class ListRecipes extends Component{
                        value={this.state.desc} />                    
                     
                     <View style={styles.titleBar}>
-                        {/* <Text style={styles.title}>FORNIHO</Text> */}
-                        <Text style={styles.title}>{this.GetRecipe}</Text>
+                        <Text style={styles.title}>FORNIHO</Text>                        
                         <Text style={styles.subtitle}>{today}</Text>                        
                     </View>                 
                 </ImageBackground>
@@ -129,8 +132,7 @@ export default class ListRecipes extends Component{
                                     <Forninho {...item}
                                     onToggleForninho={this.toggleForninho} 
                                     onDelete={this.deleteTask}                                                                         
-                                    />
-                                    
+                                    />                                    
                                 </TouchableOpacity>                                
                             )
                         }
