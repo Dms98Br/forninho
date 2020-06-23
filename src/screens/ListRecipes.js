@@ -23,6 +23,7 @@ import Forninho from '../components/Forninho'
 import AddForninho from '../screens/AddRecipes'
 import GetRecipe from '../screens/GetRecipes'
 import { TextInput } from 'react-native-gesture-handler'
+import Recipes from '../components/Recipes'
 //#endregion
 
 const initialState = { 
@@ -94,9 +95,33 @@ export default class ListRecipes extends Component{
         this.setState({ Recipes }, this.filterForninho)
     }
 
+    //#region Fazendo leitura do JSON
+    
+    retrieveData = async () => {
+        try {
+            const value = await AsyncStorage.getItem("forninhoState")            
+            console.log(value);
+            
+            const obj = JSON.parse(value)
+            console.log(obj);
+                     
+            // const keys = await AsyncStorage.getAllKeys();
+            // const result = await AsyncStorage.multiGet(keys);
+            // console.log(result.keys());
+            
+            return result.map(req => JSON.parse(req)).forEach(console.log);
+            
+                        
+            //alert(value)
+
+        } catch (error) {
+            // Error retrieving data
+        }
+    };
+    
+    //#endregion        
     render(){
         const today = moment().locale('pt-br').format('ddd, D [de] MMMM')
-        
         return(
             <View style={styles.container}>
                 
@@ -105,8 +130,8 @@ export default class ListRecipes extends Component{
                     onSave = {this.addForninho}/>        
 
                 <GetRecipe isVisible={this.state.showGetRecipes}
+                onPress={this.retrieveData}
                 onCancel={() => this.setState({ showGetRecipes: false })}/>
-
                 <ImageBackground source={chamas}
                     style = {styles.background}>   
                     
@@ -129,12 +154,13 @@ export default class ListRecipes extends Component{
                         renderItem={ ( { item } ) => 
                         {
                             return(
-                                <TouchableOpacity onPress = {() => this.setState({ showGetRecipes: true})}>
+                                // <TouchableOpacity onPress = {() => this.setState({ showGetRecipes: true})}>
+                                <TouchableOpacity onPress = {this.retrieveData}>
                                     <Forninho {...item}
                                     onToggleForninho={this.toggleForninho} 
                                     onDelete={this.deleteTask}                                                                         
                                     />  
-                                    {console.log(<Forninho {...item}/>)}
+                                    {/* {console.log(<Forninho {...item}/>)} */}
 
                                 </TouchableOpacity>                                
                             )
