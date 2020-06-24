@@ -87,7 +87,8 @@ export default class ListRecipes extends Component{
             estimateAt: newTask.date            
         })
         
-        this.setState( { Recipes, showAddForninho: false}, this.filterForninho )
+        //this.setState( { Recipes, showAddForninho: false}, this.filterForninho )
+        this.setState(Recipes,this.filterForninho)
     }
     
     deleteTask = id =>{
@@ -99,8 +100,10 @@ export default class ListRecipes extends Component{
     
     retrieveData = async () => {
         try {
-            const value = await AsyncStorage.getItem("forninhoState")            
-            console.log(value);
+            const value = await AsyncStorage.getItem("forninhoState.id")                        
+            const id = value.Recipes.id
+            
+            alert(id)
             
             const obj = JSON.parse(value)
             console.log(obj);
