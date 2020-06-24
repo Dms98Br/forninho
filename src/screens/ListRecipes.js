@@ -87,8 +87,7 @@ export default class ListRecipes extends Component{
             estimateAt: newTask.date            
         })
         
-        //this.setState( { Recipes, showAddForninho: false}, this.filterForninho )
-        this.setState(Recipes,this.filterForninho)
+        this.setState( { Recipes, showAddForninho: false}, this.filterForninho )        
     }
     
     deleteTask = id =>{
@@ -99,24 +98,11 @@ export default class ListRecipes extends Component{
     //#region Fazendo leitura do JSON
     
     retrieveData = async () => {
-        try {
-            const value = await AsyncStorage.getItem("forninhoState.id")                        
-            const id = value.Recipes.id
+        try {            
+            let user = await AsyncStorage.getItem('forninhoState');  
+            const a = this.state.Recipes.filter("name")
+            console.log(a);
             
-            alert(id)
-            
-            const obj = JSON.parse(value)
-            console.log(obj);
-                     
-            // const keys = await AsyncStorage.getAllKeys();
-            // const result = await AsyncStorage.multiGet(keys);
-            // console.log(result.keys());
-            
-            return result.map(req => JSON.parse(req)).forEach(console.log);
-            
-                        
-            //alert(value)
-
         } catch (error) {
             // Error retrieving data
         }
