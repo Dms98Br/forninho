@@ -23,7 +23,8 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 
 import commonStyles from '../commonStyles'
 
-const initialState = { name: '', date: new Date(), desc: [] , showDatePicker: false }
+const initialState = { name: '', date: new Date(),desc: '', 
+    categoria: '', ingredientes: [] , showDatePicker: false }
 let textInput=[]
 export default class AddRecipes extends Component{
     
@@ -35,11 +36,11 @@ export default class AddRecipes extends Component{
         const newTask = {
             name: this.state.name,
             date: this.state.date,            
-            desc : this.state.desc
+            ingredientes : this.state.ingredientes
          }
         this.props.onSave && this.props.onSave(newTask)        
         this.setState({ ...initialState })        
-        this.state.desc = 0
+        this.state.ingredientes = 0
     }
 
     getDatePicker = () =>{
@@ -69,13 +70,13 @@ export default class AddRecipes extends Component{
 //#region Dynamic input text
     addTextInput = (index) => {   
         textInput.push(<TextInput style={styles.input}
-        onChangeText={(desc) => this.addValues(desc, index)
+        onChangeText={(ingredientes) => this.addValues(ingredientes, index)
         } 
         placeholder="Ingrediente..." key={index}/>);
         this.setState({ textInput });
     }
     addValues = (text, index) => {
-        let dataArray = this.state.desc;
+        let dataArray = this.state.ingredientes;
         let checkBool = false;        
         if (dataArray.length !== 0){
             dataArray.forEach(element => {
@@ -87,13 +88,13 @@ export default class AddRecipes extends Component{
         }
         if (checkBool){
         this.setState({
-          desc: this.state.desc 
+          ingredientes: this.state.ingredientes 
         });        
       }
       else {        
-        this.state.desc.push({'text':text,'index':index});
+        this.state.ingredientes.push({'text':text,'index':index});
         this.setState({
-          desc: this.state.desc                    
+          ingredientes: this.state.ingredientes                    
         });            
       }
       }
@@ -131,7 +132,10 @@ export default class AddRecipes extends Component{
                             {textInput.map((value) => {
                                     return value
                             })}
-
+                            <TextInput placeholder=''
+                                onChangeText = {ingredientes => this.setState({ingredientes})}
+                                //value={this.state.}
+                                ></TextInput>
                             <Text style={styles.date} >{today} </Text>
                             <View style={styles.buttons}>     
 

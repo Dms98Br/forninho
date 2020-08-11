@@ -7,6 +7,7 @@ import {View,
 } from 'react-native'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { Gravatar } from 'react-native-gravatar'
 
 import moment from 'moment'
 import 'moment/locale/pt-br'
@@ -34,34 +35,14 @@ export default props =>{
     return(
         <Swipeable renderRightActions={getRightContent}>
             <View style = {styles.container}>
-                <TouchableWithoutFeedback onPress={() => props.onToggleForninho(props.id)}>
-                    <View style={styles.checkContainer}>
-                        {getCheckView(props.doneAt)}
-                    </View>
-                </TouchableWithoutFeedback>                
                     <View>
-                        <Text style={[styles.desc, doneOrNoteStytle]}>{props.name}</Text>                        
-                        <Text style={styles.subText}>{formattedDate}</Text>                                       
+
+                        <Text style={[styles.name, doneOrNoteStytle]}>{props.name}</Text>                        
+                        <Text style={styles.subText}>Tempo de preparo 15m</Text>                                       
                     </View>                
             </View>
         </Swipeable>        
     )
-}
-
-function getCheckView(doneAt){
-    
-    if(doneAt != null){
-        return (
-            <View style={styles.done}>
-                <Icon name='check' size={20}
-                color={'#FFF'}></Icon>
-            </View>
-        )
-    } else {
-        return (
-            <View style={styles.pending}></View>
-        )
-    }
 }
 
 const styles = StyleSheet.create({
@@ -94,9 +75,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent:'center'
     },
-    desc:{
+    name:{
+        marginLeft: 10,
         fontFamily: commonStyles.fontFamily,
         color: commonStyles.colors.mainText,        
+        fontSize: 15
+    },
+    subText:{
+        marginLeft: 10,
+        fontFamily: commonStyles.fontFamily,
+        color: '#020202',        
         fontSize: 15
     },
     date:{

@@ -21,7 +21,7 @@ import chamas from '../../assets/imgs/chamas.jpg'
 import commonStyles from '../commonStyles'
 import Forninho from '../components/Forninho'
 import AddForninho from '../screens/AddRecipes'
-import GetRecipe from '../screens/GetRecipes'
+
 import { TextInput } from 'react-native-gesture-handler'
 import Recipes from '../components/Recipes'
 //#endregion
@@ -29,7 +29,7 @@ import Recipes from '../components/Recipes'
 const initialState = { 
     showDoneForninho: true,
     showAddForninho: false,
-    showGetRecipes: false,
+    
     visibleForninho:[],
     Recipes: [ ]
 }
@@ -117,10 +117,6 @@ export default class ListRecipes extends Component{
                 <AddForninho isVisible={this.state.showAddForninho}
                     onCancel={() => this.setState({ showAddForninho: false })} 
                     onSave = {this.addForninho}/>        
-
-                <GetRecipe isVisible={this.state.showGetRecipes}
-                onPress={this.retrieveData}
-                onCancel={() => this.setState({ showGetRecipes: false })}/>
                 <ImageBackground source={chamas}
                     style = {styles.background}>   
                     
@@ -143,7 +139,7 @@ export default class ListRecipes extends Component{
                         renderItem={ ( { item } ) => 
                         {
                             return(
-                                // <TouchableOpacity onPress = {() => this.setState({ showGetRecipes: true})}>
+                                
                                 <TouchableOpacity onPress = {this.retrieveData}>
                                     <Forninho {...item}
                                     onToggleForninho={this.toggleForninho} 
